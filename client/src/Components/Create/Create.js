@@ -4,27 +4,24 @@ import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import FileBase64 from 'react-file-base64'
 import { AuthContext } from '../../store/Context';
+import { ProductContext } from '../../store/FpostContext';
+import { createPost } from '../../Action/product';
 
 const Create = () => {
+  const { product, } = useContext(ProductContext)
+
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
-  
+
   const initialState = { name: '', catagory: '', price: '', image: '' }
-  const [product, setProduct] = useState(initialState)
+  const [data, setData] = useState(initialState)
   const date = new Date()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(product)
-
+    createPost(data)
 
   }
-
-
-
-
-
-
   return (
     <Fragment>
       <Header />
@@ -38,8 +35,8 @@ const Create = () => {
               type="text"
               id="fname"
               name="Name"
-              value={product.name}
-              onChange={(e) => setProduct({ ...product, name: (e.target.value) })}
+              value={data.name}
+              onChange={(e) => setData({ ...data, name: (e.target.value) })}
             />
             <br />
             <label htmlFor="fname">Category</label>
@@ -49,15 +46,15 @@ const Create = () => {
               type="text"
               id="fname"
               name="category"
-              value={product.catagory}
-              onChange={(e) => setProduct({ ...product, catagory: (e.target.value) })}
+              value={data.catagory}
+              onChange={(e) => setData({ ...data, catagory: (e.target.value) })}
             />
             <br />
             <label htmlFor="fname">Price</label>
             <br />
             <input className="input" type="number" id="fname" name="Price"
-              value={product.price}
-              onChange={(e) => setProduct({ ...product, price: (e.target.value) })} />
+              value={data.price}
+              onChange={(e) => setData({ ...data, price: (e.target.value) })} />
             <br />
 
           </form>
@@ -68,7 +65,7 @@ const Create = () => {
             <FileBase64
               type='file'
               multiple={false}
-              onDone={({ base64 }) => setProduct({ ...product, image: base64 })}
+              onDone={({ base64 }) => setData({ ...data, image: base64 })}
             />
             <br />
             <button onClick={handleSubmit} className="uploadBtn">upload and Submit</button>

@@ -15,7 +15,7 @@ import Place from './Place';
 function Header() {
   const { openplace } = useGlobalContext()
   const { product, setProduct } = useContext(ProductContext)
-  console.log(product)
+
 
   const searchSubmit = () => {
 
@@ -70,7 +70,7 @@ function Header() {
           <div className="sellMenu">
             <SellButton></SellButton>
             <div className="sellMenuContent"
-              onClick={() => user ? navigate('/create') : navigate('/login')}>
+              onClick={() =>  navigate('/create') }>
               <SellButtonPlus></SellButtonPlus>
               <span>SELL</span>
             </div>

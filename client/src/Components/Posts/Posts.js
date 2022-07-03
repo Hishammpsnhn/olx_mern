@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getPosts } from '../../Action/product';
 import Heart from '../../assets/Heart';
 
 import { ProductContext } from '../../store/FpostContext';
@@ -9,13 +10,20 @@ import './Post.css';
 
 function Posts() {
   const { searching, setSearching } = useContext(SearchContext)
-  const {product,setProduct}= useContext(ProductContext)
-
+  const { product, setProduct } = useContext(ProductContext)
   const { postDetails, setPostDetails } = useContext(PostContext)
-  
+
   const navigate = useNavigate()
 
- 
+  const [products, setProducts] = useState([])
+  console.log(products)
+  useEffect(()=>{
+    getPosts((post) => {
+      setProducts(post)
+    })
+  },[])
+
+
   return (
     <div className="postParentDiv">
       <div className="moreView">
@@ -26,7 +34,7 @@ function Posts() {
         <div className="cards">
 
           {
-           product.map(product => {
+            products.map(product => {
 
               return (
                 <div className="card"
@@ -39,7 +47,7 @@ function Posts() {
                     <Heart></Heart>
                   </div>
                   <div className="image">
-                    <img src={product.imageUrl} alt="" />
+                    <img src={product.image} alt="unavailable" />
                   </div>
                   <div className="content">
                     <p className="rate">&#x20B9; {product.price}</p>
