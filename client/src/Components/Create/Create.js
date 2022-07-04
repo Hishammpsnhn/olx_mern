@@ -9,19 +9,21 @@ import { createPost } from '../../Action/product';
 
 const Create = () => {
   const { product, } = useContext(ProductContext)
-
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
-
+  const [loading, setLoading] = useState(true)
   const initialState = { name: '', catagory: '', price: '', image: '' }
   const [data, setData] = useState(initialState)
   const date = new Date()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    createPost(data)
-
+    createPost(data).then(() => {
+      setData(initialState)
+      navigate('/')
+    })
   }
+
   return (
     <Fragment>
       <Header />

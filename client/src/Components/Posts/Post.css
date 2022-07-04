@@ -36,9 +36,9 @@
   padding: 13px;
   max-width: 222px;
   width: 222px;
-  height: 270px;
+  height: 290px;
   display: inline-block;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .card .favorite {
@@ -84,4 +84,11 @@
 .recommendations .heading span {
   font-size: 24px;
   color: #002f34;
+}
+.button{
+  padding: 2;
+  border: none;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
 }

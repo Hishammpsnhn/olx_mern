@@ -16,15 +16,12 @@ import Post from './store/PostContext';
 import Search from './store/SearchContext'
 import Button from './store/FpostContext'
 import { Place } from './store/PlaceContext';
+import { getPosts } from './Action/product';
 function App() {
-  
-
-
 
   const { user, setUser } = useContext(AuthContext)
-  useEffect(() => {
-   
-  })
+ 
+
   return (
     <div>
       <Place>
