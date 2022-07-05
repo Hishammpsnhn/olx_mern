@@ -1,9 +1,9 @@
 import React,{useContext} from 'react'
 import './Post.css';
 import Heart from '../../assets/Heart';
-import { useNavigate } from 'react-router-dom';
+
 import { ProductContext } from '../../store/FpostContext';
-import { deletePost, getPosts } from '../../Action/product';
+import { deletePost } from '../../Action/product';
 
 function Post() {
     const { product, setProduct } = useContext(ProductContext)

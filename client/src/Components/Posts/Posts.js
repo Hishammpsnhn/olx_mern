@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { deletePost, getPosts } from '../../Action/product';
+import {getPosts } from '../../Action/product';
 import Heart from '../../assets/Heart';
 import { ProductContext } from '../../store/FpostContext';
 import { PostContext } from '../../store/PostContext';
@@ -8,7 +8,7 @@ import { SearchContext } from '../../store/SearchContext';
 import Post from './Post';
 import './Post.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { Audio, BallTriangle, ThreeDots } from 'react-loader-spinner'
+import { ThreeDots } from 'react-loader-spinner'
 
 function Posts() {
   const { searching, setSearching } = useContext(SearchContext)
@@ -18,7 +18,7 @@ function Posts() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [products, setProducts] = useState([])
-  console.log(products)
+  
 
   useEffect(() => {
     setIsLoading(true)

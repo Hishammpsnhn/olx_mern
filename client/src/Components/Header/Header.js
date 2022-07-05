@@ -16,25 +16,29 @@ function Header() {
   const { openplace } = useGlobalContext()
   const { product, setProduct } = useContext(ProductContext)
 
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+
 
   const searchSubmit = () => {
 
   }
 
   const { searching, setSearching } = useContext(SearchContext)
-  const { user, setUser } = useContext(AuthContext)
-
+  // const { user, setUser } = useContext(AuthContext)
+const handleLogout = ()=>{
+  localStorage.clear()
+  setUser(null)
+}
   const handlechange = (e) => {
 
   }
-  
   const navigate = useNavigate()
   return (
     <>
       <div className="headerParentDiv">
         <div className="headerChildDiv">
           <div className="brandName">
-            <OlxLogo/>
+            <OlxLogo />
           </div>
           <div className="placeSearch">
             <Search></Search>
@@ -42,15 +46,15 @@ function Header() {
             <div>
               <Arrow></Arrow>
             </div>
-            
+
           </div>
           <div className="productSearch">
             <div className="input">
               <input
                 type="text"
                 placeholder="Find car,mobile phone and more..."
-                // value={searching}
-                // onChange={handlechange}
+              // value={searching}
+              // onChange={handlechange}
               />
             </div>
             <div className="searchAction" onClick={searchSubmit}>
@@ -62,15 +66,15 @@ function Header() {
             <Arrow></Arrow>
           </div>
           <div className="loginPage">
-            <span>{user ? `${user.displayName} ` : 'Login'}</span>
+            <span>{user ? `${user?.result?.username} ` : <button onClick={()=> navigate('/login')}>Login</button>}</span>
             <hr />
           </div>
-          {/* logout */}
+          { user?.result && <button onClick={handleLogout} >Logout</button>}
 
           <div className="sellMenu">
             <SellButton></SellButton>
             <div className="sellMenuContent"
-              onClick={() =>  navigate('/create') }>
+              onClick={() => user?.result ? navigate('/create') : navigate('/login') }>
               <SellButtonPlus></SellButtonPlus>
               <span>SELL</span>
             </div>
