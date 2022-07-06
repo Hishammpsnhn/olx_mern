@@ -1,6 +1,14 @@
 import axios from 'axios';
 const API = axios.create({baseURL:"http://localhost:8000"})
 
+API.interceptors.request.use((req)=>{
+    if(localStorage.getItem('profile')){
+        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+
+    }
+    return req
+})
+
 //fetch all post from db
 export const getPosts = ()=> API.get('/posts')
 export const createPosts = (product)=> API.post('/posts',product) 

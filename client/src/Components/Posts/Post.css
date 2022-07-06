@@ -60,6 +60,10 @@
   min-height: 100%;
   text-align: center;
 }
+.content{
+  display: flex;
+  justify-content: space-between;
+}
 .card .content .rate {
   margin-top: 10px;
   font-size: larger;
@@ -86,7 +90,7 @@
   color: #002f34;
 }
 .button{
-  padding: 2;
+  padding: 2px;
   border: none;
   background-color: red;
   color: white;

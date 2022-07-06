@@ -5,6 +5,7 @@ const postSchema = mongoose.Schema({
     catagory:String,
     price:String,
     image:String,
+    creator:String,
 })
 const Products = mongoose.model('products',postSchema) 
 
