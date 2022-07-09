@@ -14,6 +14,8 @@ function Posts() {
   const { searching, setSearching } = useContext(SearchContext)
   const { product, setProduct } = useContext(ProductContext)
   const { postDetails, setPostDetails } = useContext(PostContext)
+  const [user,setUser] =useState( JSON.parse(localStorage.getItem('profile')))
+  console.log(user)
 
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
@@ -27,16 +29,19 @@ function Posts() {
       setIsLoading(false)
     })
 
-  }, [])
+  }, [user])
 
   useEffect(() => {
     setIsLoading(true)
     getFavPosts((post) => {
-      setFavProducts(post)
-      setIsLoading(false)
+      const newPost = post.filter((item) => item.userId === user?.result._id)
+      if(newPost){
+        setFavProducts(newPost)
+        setIsLoading(false)
+      }
     })
 
-  }, [])
+  }, [user])
 
   return (
 
@@ -62,7 +67,7 @@ function Posts() {
           isLoading ? (
             <ThreeDots color="#00BFFF" height={80} width={80} />
           ) : (
-            <FavPost favProducts={favProducts} />
+            <FavPost favProducts={favProducts} user={ user} />
           )
         }
       </div>

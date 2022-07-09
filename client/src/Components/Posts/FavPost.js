@@ -2,9 +2,10 @@ import React from 'react'
 import './Post.css';
 
 function FavPost(product) {
-    console.log(product.favProducts)
+    const user = JSON.parse(localStorage.getItem('profile'))
+if(!user?.result) return <h5>please login to view and add items </h5>
     return (
-        <div className="cards">
+        <div className="cards"> 
             {
                 product.favProducts?.map(product => {
                     return (
@@ -26,7 +27,6 @@ function FavPost(product) {
                     )
                 })
             }
-            
         </div>
     )
 }

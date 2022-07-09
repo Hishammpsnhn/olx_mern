@@ -47,9 +47,11 @@ export const favPost = async (req, res) => {
 }
 export const getFavPosts = async (req, res) => {
     console.log("called fav")
+    const userId = req.userId;
     try {
+        //const userpost = await FavPost.findOne({userId})
         const post = await FavPost.find()
-        console.log(post)
+        //console.log(userpost)
         res.status(201).json(post)
     } catch (error) {
         console.log(error)
