@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {getPosts } from '../../Action/product';
-import Heart from '../../assets/Heart';
+import { getFavPosts, getPosts } from '../../Action/product';
 import { ProductContext } from '../../store/FpostContext';
 import { PostContext } from '../../store/PostContext';
 import { SearchContext } from '../../store/SearchContext';
@@ -9,6 +8,7 @@ import Post from './Post';
 import './Post.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { ThreeDots } from 'react-loader-spinner'
+import FavPost from './FavPost';
 
 function Posts() {
   const { searching, setSearching } = useContext(SearchContext)
@@ -17,8 +17,8 @@ function Posts() {
 
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
-  const [products, setProducts] = useState([])
-  
+  const [favProducts, setFavProducts] = useState([])
+
 
   useEffect(() => {
     setIsLoading(true)
@@ -26,6 +26,16 @@ function Posts() {
       setProduct(post)
       setIsLoading(false)
     })
+
+  }, [])
+
+  useEffect(() => {
+    setIsLoading(true)
+    getFavPosts((post) => {
+      setFavProducts(post)
+      setIsLoading(false)
+    })
+
   }, [])
 
   return (
@@ -46,26 +56,15 @@ function Posts() {
       </div >
       <div className="recommendations">
         <div className="heading">
-          <span>Fresh recommendations</span>
+          <span>Favorite </span>
         </div>
-        <div className="cards">
-          <div className="card">
-            <div className="favorite">
-              <Heart></Heart>
-            </div>
-            <div className="image">
-              <img src="../../../Images/R15V3.jpg" alt="" />
-            </div>
-            <div className="content">
-              <p className="rate">&#x20B9; 250000</p>
-              <span className="kilometer">Two Wheeler</span>
-              <p className="name"> YAMAHA R15V3</p>
-            </div>
-            <div className="date">
-              <span>10/5/2021</span>
-            </div>
-          </div>
-        </div>
+        {
+          isLoading ? (
+            <ThreeDots color="#00BFFF" height={80} width={80} />
+          ) : (
+            <FavPost favProducts={favProducts} />
+          )
+        }
       </div>
     </div >
   )

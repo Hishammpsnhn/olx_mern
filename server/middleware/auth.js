@@ -4,7 +4,6 @@ const secret = 'test';
 const auth = async (req, res, next) => {
     try {
         const token = await req.headers.authorization.split(" ")[1]
-        console.log(token)
          const isCustomAuth = token.length < 500;
          let decodeData;
         if(token && isCustomAuth){

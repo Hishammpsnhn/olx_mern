@@ -1,17 +1,23 @@
-import React, { useContext } from 'react'
+import React, { useContext,useState } from 'react'
 import './Post.css';
 import Heart from '../../assets/Heart';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { ProductContext } from '../../store/FpostContext';
-import { deletePost } from '../../Action/product';
+import { deletePost,favPost } from '../../Action/product';
 
 function Post() {
     const { product, setProduct } = useContext(ProductContext)
+    console.log(product)
     const user = JSON.parse(localStorage.getItem('profile'))
-
+  
     const handleDelete = (id) => {
         deletePost(id)
         setProduct(product.filter((item) => item._id !== id))
+    }
+    
+    const handlefav = (product)=>{
+        console.log(product)
+        favPost(product)
     }
 
 
@@ -23,7 +29,7 @@ function Post() {
                         <div className="card"
                         // onClick={() => { setPostDetails(product) navigate('/view') }}
                         >
-                            <div className="favorite">
+                            <div className="favorite" onClick={()=> handlefav(product)} >
                                 <Heart></Heart>
                             </div>
                             <div className="image">
@@ -35,7 +41,7 @@ function Post() {
                                     <span className="kilometer">{product.catagory}</span>
                                     <p className="name"> {product.name}</p>
                                 </div>
-                                <div style={{marginTop:'15px'}}>
+                                <div style={{ marginTop: '15px' }}>
                                     {
                                         user?.result?._id === product.creator && (
                                             <span className='button'
@@ -49,7 +55,6 @@ function Post() {
                             <div className="date">
                                 <span>{product.cratedAt}</span>
                             </div>
-
                         </div>
                     )
                 })
