@@ -1,22 +1,20 @@
-import React, { useContext,useState } from 'react'
+import React, { useContext} from 'react'
 import './Post.css';
 import Heart from '../../assets/Heart';
-// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { ProductContext } from '../../store/FpostContext';
 import { deletePost,favPost } from '../../Action/product';
+import { AuthContext } from '../../store/Context';
 
 function Post() {
     const { product, setProduct } = useContext(ProductContext)
-    console.log(product)
-    const user = JSON.parse(localStorage.getItem('profile'))
-  
+    const { user} = useContext(AuthContext)
+
     const handleDelete = (id) => {
         deletePost(id)
         setProduct(product.filter((item) => item._id !== id))
     }
     
     const handlefav = (product)=>{
-        console.log(product)
         favPost(product)
     }
 
@@ -29,7 +27,7 @@ function Post() {
                         <div className="card"
                         // onClick={() => { setPostDetails(product) navigate('/view') }}
                         >
-                            <div className="favorite" onClick={()=> handlefav(product)} >
+                            <div className="favorite" onClick={()=> handlefav(product._id)} >
                                 <Heart></Heart>
                             </div>
                             <div className="image">

@@ -9,18 +9,19 @@ import './Post.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { ThreeDots } from 'react-loader-spinner'
 import FavPost from './FavPost';
+import { AuthContext } from '../../store/Context';
 
 function Posts() {
-  const { searching, setSearching } = useContext(SearchContext)
-  const { product, setProduct } = useContext(ProductContext)
-  const { postDetails, setPostDetails } = useContext(PostContext)
-  const [user,setUser] =useState( JSON.parse(localStorage.getItem('profile')))
-  console.log(user)
+  // const { searching, setSearching } = useContext(SearchContext)
+  // const { postDetails, setPostDetails } = useContext(PostContext)
+  const { setProduct } = useContext(ProductContext)
+  const { user } = useContext(AuthContext)
+
 
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [favProducts, setFavProducts] = useState([])
-
+console.log(favProducts)
 
   useEffect(() => {
     setIsLoading(true)
@@ -33,13 +34,12 @@ function Posts() {
 
   useEffect(() => {
     setIsLoading(true)
-    getFavPosts((post) => {
-      const newPost = post.filter((item) => item.userId === user?.result._id)
-      if(newPost){
-        setFavProducts(newPost)
-        setIsLoading(false)
-      }
-    })
+    if (user) {
+      getFavPosts((post) => {
+         setFavProducts(post)
+          setIsLoading(false)
+      })
+    }
 
   }, [user])
 
@@ -67,7 +67,7 @@ function Posts() {
           isLoading ? (
             <ThreeDots color="#00BFFF" height={80} width={80} />
           ) : (
-            <FavPost favProducts={favProducts} user={ user} />
+            <FavPost favProducts={favProducts} user={user} />
           )
         }
       </div>

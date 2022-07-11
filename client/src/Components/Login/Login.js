@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import Logo from '../../olx-logo.png';
 import './Login.css';
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../Action/User';
 import Loading from '../Loading/Loading';
+import { AuthContext } from '../../store/Context';
 
 function Login() {
   const [userData, setUserData] = useState({email:'',password:''})
   const [Isloading,setIsLoading] = useState(false)
+  const { user, setUser } = useContext(AuthContext)
+
   const navigate = useNavigate()
 
   const handlelogin = (e) => {
     e.preventDefault()
     setIsLoading(true)
     login(userData,(res)=>{
-      console.log(res)
       localStorage.setItem('profile', JSON.stringify(res))
+      setUser(JSON.parse(localStorage.getItem('profile')))
       navigate('/')
       setIsLoading(false)
     })

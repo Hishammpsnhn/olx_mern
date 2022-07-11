@@ -1,6 +1,7 @@
 import Products from "../models/post.js";
 import mongoose from "mongoose";
 import FavPost from "../models/favposts.js";
+import Users from "../models/user.js";
 
 export const getPosts = async (req, res) => {
     try {
@@ -34,26 +35,32 @@ export const deletePost = async (req, res) => {
     }
 }
 export const favPost = async (req, res) => {
-    const post = req.body; 
-    const userId = req.userId;
-    const newPost = new FavPost({...post,userId:userId});
-    try {
-        await newPost.save() ;      
-        res.status(202).json(newPost)
-    } catch (error) {
-        console.log(error);
+    console.log("favpost called")
+    const { id } = req.params;
+    if (!req.userId) return res.json({ message: 'unauthenticated' })
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id')
+    const post = await Users.findById(req.userId);
+    const index = post.favorites.findIndex((user) => user === id)
+    if (index === -1) {
+        post.favorites.push(id);
+    } else {
+        post.favorites=post.favorites.filter((favId) => favId !== id)
     }
+    try {
+        const updatedPost = await Users.findByIdAndUpdate(req.userId, post, { new: true });
 
+    } catch (error) {
+        console.log(error)
+    }
 }
 export const getFavPosts = async (req, res) => {
-    console.log("called fav")
-    const userId = req.userId;
     try {
-        //const userpost = await FavPost.findOne({userId})
-        const post = await FavPost.find()
-        //console.log(userpost)
-        res.status(201).json(post)
+        const loginedUser = await Users.findById(req.userId);
+        const favorite = loginedUser.favorites;
+        const favPosts = await Products.find({ '_id': { $in: favorite } })
+        res.status(201).json(favPosts)
     } catch (error) {
+        console.log(error)
         console.log(error)
     }
 }

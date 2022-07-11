@@ -20,9 +20,9 @@ export const deletePost = async (id) => {
     }
 }
 export const favPost = async (product) => {
+    console.log("post")
     try {
      await api.favPost(product)
-      
     } catch (error) {
         console.log(error)
     }

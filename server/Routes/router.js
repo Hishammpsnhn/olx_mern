@@ -8,6 +8,6 @@ router.get('/',getPosts);
 router.post('/',auth,createPost);
 router.get('/:id/delete',auth,deletePost)
 
-router.post('/fav',auth,favPost)
-router.get('/favorite',getFavPosts);
+router.get('/:id/fav',auth,favPost)
+router.get('/favorite',auth,getFavPosts);
 export default router;

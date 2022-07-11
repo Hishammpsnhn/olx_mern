@@ -16,19 +16,18 @@ function Header() {
   const { openplace } = useGlobalContext()
   const { product, setProduct } = useContext(ProductContext)
 
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-
-
+  const { user, setUser } = useContext(AuthContext)
+ 
   const searchSubmit = () => {
 
   }
 
   const { searching, setSearching } = useContext(SearchContext)
-  // const { user, setUser } = useContext(AuthContext)
-const handleLogout = ()=>{
-  localStorage.clear()
-  setUser(null)
-}
+
+  const handleLogout = () => {
+    localStorage.clear()
+    setUser(null)
+  }
   const handlechange = (e) => {
 
   }
@@ -66,15 +65,15 @@ const handleLogout = ()=>{
             <Arrow></Arrow>
           </div>
           <div className="loginPage">
-            <span>{user ? `${user?.result?.username} ` : <button onClick={()=> navigate('/login')}>Login</button>}</span>
+            <span>{user ? `${user?.result?.username} ` : <button onClick={() => navigate('/login')}>Login</button>}</span>
             <hr />
           </div>
-          { user?.result && <button onClick={handleLogout} >Logout</button>}
+          {user?.result && <button onClick={handleLogout} >Logout</button>}
 
           <div className="sellMenu">
             <SellButton></SellButton>
             <div className="sellMenuContent"
-              onClick={() => user?.result ? navigate('/create') : navigate('/login') }>
+              onClick={() => user?.result ? navigate('/create') : navigate('/login')}>
               <SellButtonPlus></SellButtonPlus>
               <span>SELL</span>
             </div>

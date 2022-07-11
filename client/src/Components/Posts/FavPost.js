@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../store/Context';
 import './Post.css';
 
 function FavPost(product) {
-    const user = JSON.parse(localStorage.getItem('profile'))
-if(!user?.result) return <h5>please login to view and add items </h5>
+    const { user } = useContext(AuthContext)
+
+    if(!user?.result) return <h5>please login to view and add items </h5>
+   if(product.favProducts.length === 0) return <h5>Nothing you like</h5>
     return (
         <div className="cards"> 
             {
