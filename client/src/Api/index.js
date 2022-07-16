@@ -17,5 +17,7 @@ export const deletePost = (id)=> API.get(`/posts/${id}/delete`)
 export const singup = (userDetails)=> API.post ('/auth/singup',userDetails)
 export const login = (userDetails)=> API.post ('/auth/login',userDetails)
 //favaroite post
-export const favPost = (id)=> API.get(`/posts/${id}/fav`)
 export const getFavPosts = ()=> API.get('/posts/favorite')
+
+export const favPost = (id)=> API.get(`/posts/${id}/fav`)
+export const deleteFavPost=(id)=> API.get(`/posts/${id}/deletefav`)

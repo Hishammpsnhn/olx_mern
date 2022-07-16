@@ -1,6 +1,5 @@
 import Products from "../models/post.js";
 import mongoose from "mongoose";
-import FavPost from "../models/favposts.js";
 import Users from "../models/user.js";
 
 export const getPosts = async (req, res) => {
@@ -34,25 +33,7 @@ export const deletePost = async (req, res) => {
         console.log(error)
     }
 }
-export const favPost = async (req, res) => {
-    console.log("favpost called")
-    const { id } = req.params;
-    if (!req.userId) return res.json({ message: 'unauthenticated' })
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id')
-    const post = await Users.findById(req.userId);
-    const index = post.favorites.findIndex((user) => user === id)
-    if (index === -1) {
-        post.favorites.push(id);
-    } else {
-        post.favorites=post.favorites.filter((favId) => favId !== id)
-    }
-    try {
-        const updatedPost = await Users.findByIdAndUpdate(req.userId, post, { new: true });
 
-    } catch (error) {
-        console.log(error)
-    }
-}
 export const getFavPosts = async (req, res) => {
     try {
         const loginedUser = await Users.findById(req.userId);
@@ -61,6 +42,36 @@ export const getFavPosts = async (req, res) => {
         res.status(201).json(favPosts)
     } catch (error) {
         console.log(error)
+
+    }
+}
+
+export const favPost = async (req, res) => {
+    console.log("fav called")
+    const { id } = req.params;
+    if (!req.userId) return res.json({ message: 'unauthenticated' })
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id')
+    try {
+        const loginedUser = await Users.findById(req.userId);
+        loginedUser.favorites.push(id);
+        const favPosts = await Products.find({ '_id': { $in: id } })
+        res.status(201).json(favPosts)
+        await Users.findByIdAndUpdate(req.userId, loginedUser, { new: true });
+    } catch (error) {
         console.log(error)
     }
+}
+export const deleteFavPost = async (req, res) => {
+    console.log("deletefav called")
+    const { id } = req.params;
+    if (!req.userId) return res.json({ message: 'unauthenticated' })
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id')
+    try {
+        const LoginedUser = await Users.findById(req.userId);
+        LoginedUser.favorites = await LoginedUser.favorites.filter((favId) => favId !== id)
+        await Users.findByIdAndUpdate(req.userId, LoginedUser, { new: true });
+    } catch (error) {
+        console.log(error)
+    }
+
 }

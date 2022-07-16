@@ -16,13 +16,9 @@ function Posts() {
   // const { postDetails, setPostDetails } = useContext(PostContext)
   const { setProduct } = useContext(ProductContext)
   const { user } = useContext(AuthContext)
-
-
-  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [favProducts, setFavProducts] = useState([])
-console.log(favProducts)
-
+  const [favproductId,setFavProductId] = useState(null)
   useEffect(() => {
     setIsLoading(true)
     getPosts((post) => {
@@ -55,7 +51,7 @@ console.log(favProducts)
           isLoading ? (
             <ThreeDots color="#00BFFF" height={80} width={80} />
           ) : (
-            <Post />
+            <Post setFavProductId={setFavProductId} favProducts={favProducts} setFavProducts={setFavProducts} />
           )
         }
       </div >
@@ -67,7 +63,7 @@ console.log(favProducts)
           isLoading ? (
             <ThreeDots color="#00BFFF" height={80} width={80} />
           ) : (
-            <FavPost favProducts={favProducts} user={user} />
+            <FavPost favProducts={favProducts} setFavProducts={setFavProducts} favproductId={favproductId} setFavProductId={setFavProductId}/>
           )
         }
       </div>

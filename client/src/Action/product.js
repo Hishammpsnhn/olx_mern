@@ -1,7 +1,7 @@
 import * as api from "../Api";
 
-export const getPosts = async (callback) => {  
-    const {data} = await api.getPosts()
+export const getPosts = async (callback) => {
+    const { data } = await api.getPosts()
     callback(data)
 }
 
@@ -19,18 +19,29 @@ export const deletePost = async (id) => {
         console.log(error)
     }
 }
-export const favPost = async (product) => {
-    console.log("post")
+export const getFavPosts = async (callback) => {
+    const { data } = await api.getFavPosts()
+    console.log(data)
+    callback(data)
+}
+
+export const favPost = async (product, callback) => {
     try {
-     await api.favPost(product)
+        const { data } = await api.favPost(product);
+            console.log(data)
+            callback(data);
+       
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteFavPost= async(favProductId)=>{
+    try {
+        await api.deleteFavPost(favProductId);
+
     } catch (error) {
         console.log(error)
     }
-} 
-
-export const getFavPosts = async (callback) => {  
-    const {data} = await api.getFavPosts()
-    console.log(data)
-    callback(data)
 }
 

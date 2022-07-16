@@ -1,21 +1,34 @@
-import React, { useContext} from 'react'
+import React, { useContext, useState } from 'react'
 import './Post.css';
 import Heart from '../../assets/Heart';
 import { ProductContext } from '../../store/FpostContext';
-import { deletePost,favPost } from '../../Action/product';
+import { deletePost, favPost, deleteFavPost } from '../../Action/product';
 import { AuthContext } from '../../store/Context';
+import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material'
 
-function Post() {
+function Post({ setFavProductId, favProducts, setFavProducts }) {
+    console.log(favProducts)
     const { product, setProduct } = useContext(ProductContext)
-    const { user} = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
 
     const handleDelete = (id) => {
         deletePost(id)
         setProduct(product.filter((item) => item._id !== id))
     }
-    
-    const handlefav = (product)=>{
-        favPost(product)
+
+    const handlefav = (productId) => {
+        const fav = favProducts.find((item) => item._id === productId);
+        if (fav) {
+            deleteFavPost(productId)
+            setFavProductId(productId)
+           
+        } else {
+            favPost(productId, (fav) => {
+                const newfav = fav.find((item) => item._id === productId);
+                setFavProducts([...favProducts, newfav])
+        
+            })
+        }
     }
 
 
@@ -27,8 +40,12 @@ function Post() {
                         <div className="card"
                         // onClick={() => { setPostDetails(product) navigate('/view') }}
                         >
-                            <div className="favorite" onClick={()=> handlefav(product._id)} >
-                                <Heart></Heart>
+                            <div className="favorite" onClick={() => handlefav(product._id)} >
+                                {
+                                    favProducts.find((items)=> items._id === product._id) ?
+                                     <Favorite /> : <FavoriteBorderOutlined />
+                                }
+
                             </div>
                             <div className="image">
                                 <img src={product.image} alt="unavailable" />
