@@ -1,20 +1,32 @@
 .viewParentDiv {
   padding-top: 4em;
   display: flex;
+
 }
+
 .viewParentDiv .imageShowDiv {
   padding: 16px;
   width: 70vw;
+
 }
+
+.detail-main {
+  width:100%;
+  display:flex;
+  margin: 50px 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
 .viewParentDiv .imageShowDiv img {
-  width: 65vw;
-  height: 85vh;
+  width: 40vw;
+  height: 50vh;
 }
 
 .viewParentDiv .rightSection {
   padding: 16px;
-  margin-top: 3em;
-  width: 30vw;
+ 
+  width: 50vw;
 }
 
 .viewParentDiv .rightSection .productDetails :first-child {
@@ -47,4 +59,9 @@
   color: #002f34;
   font-weight: 400;
   padding: 0;
+}
+.comment-section{
+  width:50%;
+  margin:40px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }

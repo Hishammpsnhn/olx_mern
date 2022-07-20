@@ -4,7 +4,6 @@ export const getPosts = async (callback) => {
     const { data } = await api.getPosts()
     callback(data)
 }
-
 export const createPost = async (product) => {
     try {
         await api.createPosts(product)
@@ -19,6 +18,8 @@ export const deletePost = async (id) => {
         console.log(error)
     }
 }
+
+//favorite post
 export const getFavPosts = async (callback) => {
     const { data } = await api.getFavPosts()
     console.log(data)

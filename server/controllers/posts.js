@@ -2,6 +2,7 @@ import Products from "../models/post.js";
 import mongoose from "mongoose";
 import Users from "../models/user.js";
 
+//fetch all posts
 export const getPosts = async (req, res) => {
     try {
         const post = await Products.find()
@@ -11,6 +12,7 @@ export const getPosts = async (req, res) => {
     }
 }
 
+//create product for selling
 export const createPost = async (req, res) => {
     const post = req.body;
     const newPost = new Products({ ...post, creator: req.userId, createdAt: new Date().toISOString() })
@@ -21,19 +23,20 @@ export const createPost = async (req, res) => {
         console.log(error)
     }
 }
+//delete product
 export const deletePost = async (req, res) => {
     const { id } = req.params;
-
-    console.log("delete called", id)
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post in this id');
         await Products.findByIdAndDelete(id)
-        res.json({ message: 'success fully deleted' })
+        res.json({ message: 'successfully deleted' })
     } catch (error) {
         console.log(error)
     }
 }
 
+
+//get all favorite post from db 
 export const getFavPosts = async (req, res) => {
     try {
         const loginedUser = await Users.findById(req.userId);
@@ -45,9 +48,8 @@ export const getFavPosts = async (req, res) => {
 
     }
 }
-
+//add product id into userdb,find product using params-id
 export const favPost = async (req, res) => {
-    console.log("fav called")
     const { id } = req.params;
     if (!req.userId) return res.json({ message: 'unauthenticated' })
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id')
@@ -61,8 +63,8 @@ export const favPost = async (req, res) => {
         console.log(error)
     }
 }
+//remove product id from user db
 export const deleteFavPost = async (req, res) => {
-    console.log("deletefav called")
     const { id } = req.params;
     if (!req.userId) return res.json({ message: 'unauthenticated' })
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id')

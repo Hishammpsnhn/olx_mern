@@ -5,12 +5,15 @@ import { ProductContext } from '../../store/FpostContext';
 import { deletePost, favPost, deleteFavPost } from '../../Action/product';
 import { AuthContext } from '../../store/Context';
 import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+import { PostContext } from '../../store/PostContext';
 
 function Post({ setFavProductId, favProducts, setFavProducts }) {
     console.log(favProducts)
+    const { postDetails, setPostDetails } = useContext(PostContext)
     const { product, setProduct } = useContext(ProductContext)
     const { user } = useContext(AuthContext)
-
+    const navigate = useNavigate();
     const handleDelete = (id) => {
         deletePost(id)
         setProduct(product.filter((item) => item._id !== id))
@@ -21,14 +24,17 @@ function Post({ setFavProductId, favProducts, setFavProducts }) {
         if (fav) {
             deleteFavPost(productId)
             setFavProductId(productId)
-           
+
         } else {
             favPost(productId, (fav) => {
                 const newfav = fav.find((item) => item._id === productId);
                 setFavProducts([...favProducts, newfav])
-        
             })
         }
+    }
+    const handleDetail=(product)=>{
+        navigate("/view")
+        setPostDetails(product)
     }
 
 
@@ -38,12 +44,12 @@ function Post({ setFavProductId, favProducts, setFavProducts }) {
                 product.map(product => {
                     return (
                         <div className="card"
-                        // onClick={() => { setPostDetails(product) navigate('/view') }}
+                         onClick={()=>{handleDetail(product)}}
                         >
                             <div className="favorite" onClick={() => handlefav(product._id)} >
                                 {
-                                    favProducts.find((items)=> items._id === product._id) ?
-                                     <Favorite /> : <FavoriteBorderOutlined />
+                                    favProducts.find((items) => items._id === product._id) ?
+                                        <Favorite /> : <FavoriteBorderOutlined />
                                 }
 
                             </div>
@@ -65,7 +71,6 @@ function Post({ setFavProductId, favProducts, setFavProducts }) {
                                         )
                                     }
                                 </div>
-
                             </div>
                             <div className="date">
                                 <span>{product.cratedAt}</span>
@@ -74,7 +79,7 @@ function Post({ setFavProductId, favProducts, setFavProducts }) {
                     )
                 })
             }
-        </div>
+        </div >
     )
 }
 

@@ -11,9 +11,8 @@ export const Singup =async (req, res) => {
         const existingUser =await Users.findOne({ email })
         if(existingUser)   return res.status(400).json({message:'user already exist'})
         const hashedPassword = await bcrypt.hash(password,12) ;
-        console.log(hashedPassword)
         const result = await Users.create({username,email,password:hashedPassword,phone})
-        const token = jwt.sign({email:result.email,id:result._id}, 'test',{expiresIn:'1hr'})
+        const token = jwt.sign({email:result.email,id:result._id}, 'test',{expiresIn:'365d'})
         res.status(200).json({result,token})
     } catch (error) {
         console.log(error)
@@ -29,8 +28,7 @@ export const Login =async (req, res) => {
         if(!existingUser) return res.status(400).json({message:'user not exist'})
         const isPasswordCorrect =await bcrypt.compare(password,existingUser.password) ;
         if(!isPasswordCorrect) return res.status(400).json({message:'incorrect password'})
-        const token = jwt.sign({email:existingUser.email,id:existingUser._id}, 'test',{expiresIn:'1hr'})
-        console.log(token,existingUser)
+        const token = jwt.sign({email:existingUser.email,id:existingUser._id}, 'test',{expiresIn:'365d'})
         res.status(200).json({result:existingUser,token})
     } catch (error) {
         console.log(error)
