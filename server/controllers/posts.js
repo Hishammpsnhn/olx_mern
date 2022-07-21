@@ -1,4 +1,4 @@
-import Products from "../models/post.js";
+import Products from "../models/products.js";
 import mongoose from "mongoose";
 import Users from "../models/user.js";
 
@@ -12,7 +12,7 @@ export const getPosts = async (req, res) => {
     }
 }
 
-//create product for selling
+// user create product for selling
 export const createPost = async (req, res) => {
     const post = req.body;
     const newPost = new Products({ ...post, creator: req.userId, createdAt: new Date().toISOString() })
@@ -23,7 +23,7 @@ export const createPost = async (req, res) => {
         console.log(error)
     }
 }
-//delete product
+//delete product by uploaded user
 export const deletePost = async (req, res) => {
     const { id } = req.params;
     try {
@@ -75,5 +75,18 @@ export const deleteFavPost = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+}
 
+// add comments on post
+export const comment = async (req, res) => {
+    const { id } = req.params;
+    const { comment } = req.body;
+    try {
+        const post = await Products.findById(id);
+        post.comments.push(comment);
+        const updatedPost = await Products.findByIdAndUpdate(id, post, { new: true });
+        res.json(updatedPost)       
+    } catch (error) {
+        console.log(error);
+    }
 }

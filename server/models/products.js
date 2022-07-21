@@ -6,6 +6,14 @@ const postSchema = mongoose.Schema({
     price: String,
     image: String,
     creator: String,
+    comments:{
+        type:[String],
+        default:[]
+    },
+    createdAt:{
+        type:Date,
+        default: new Date()
+    }
 
 })
 const Products = mongoose.model('products', postSchema)

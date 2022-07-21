@@ -1,5 +1,6 @@
 import * as api from "../Api";
 
+//All posts
 export const getPosts = async (callback) => {
     const { data } = await api.getPosts()
     callback(data)
@@ -41,6 +42,15 @@ export const deleteFavPost= async(favProductId)=>{
     try {
         await api.deleteFavPost(favProductId);
 
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//comment post
+export const commentPost = async(commentText,id)=>{
+    try {
+        await api.commentPost(commentText,id)
     } catch (error) {
         console.log(error)
     }
