@@ -80,12 +80,13 @@ export const deleteFavPost = async (req, res) => {
 // add comments on post
 export const comment = async (req, res) => {
     const { id } = req.params;
-    const { comment } = req.body;
+    const  {commentText}  = req.body;
+    console.log(id,commentText)
     try {
         const post = await Products.findById(id);
-        post.comments.push(comment);
+        post.comments.push(commentText);
         const updatedPost = await Products.findByIdAndUpdate(id, post, { new: true });
-        res.json(updatedPost)       
+        res.json(updatedPost);      
     } catch (error) {
         console.log(error);
     }

@@ -1,16 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { PostContext } from '../../store/PostContext';
-
+import Comment from './Comment';
 import './View.css';
 function View() {
-  const { postDetails, setPostDetails } = useContext(PostContext)
-
-  console.log(postDetails)
+  const { postDetails,setPostDetails} = useContext(PostContext)
+  console.log(postDetails);
   const [userDetails, setUserDetails] = useState()
-  useEffect(() => {
 
-
-  }, [])
   return (
     <div className="viewParentDiv">
       <div className='detail-main' >
@@ -37,7 +33,7 @@ function View() {
           </div>
         </div>
         <div className="comment-section">
-          <p>commant section soon...</p>
+          <Comment />
         </div>
       </div>
     </div>

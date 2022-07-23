@@ -50,7 +50,9 @@ export const deleteFavPost= async(favProductId)=>{
 //comment post
 export const commentPost = async(commentText,id)=>{
     try {
-        await api.commentPost(commentText,id)
+        let {data}= await api.commentPost(commentText,id);
+       console.log(data)
+       return data
     } catch (error) {
         console.log(error)
     }
