@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { PostContext } from '../../store/PostContext';
 
 function Post({ setFavProductId, favProducts, setFavProducts }) {
-    console.log(favProducts)
+
     const { postDetails, setPostDetails } = useContext(PostContext)
     const { product, setProduct } = useContext(ProductContext)
     const { user } = useContext(AuthContext)

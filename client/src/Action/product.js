@@ -30,15 +30,15 @@ export const getFavPosts = async (callback) => {
 export const favPost = async (product, callback) => {
     try {
         const { data } = await api.favPost(product);
-            console.log(data)
-            callback(data);
-       
+        console.log(data)
+        callback(data);
+
     } catch (error) {
         console.log(error);
     }
 }
 
-export const deleteFavPost= async(favProductId)=>{
+export const deleteFavPost = async (favProductId) => {
     try {
         await api.deleteFavPost(favProductId);
 
@@ -48,13 +48,34 @@ export const deleteFavPost= async(favProductId)=>{
 }
 
 //comment post
-export const commentPost = async(commentText,id)=>{
+export const commentPost = async (commentText, id) => {
     try {
-        let {data}= await api.commentPost(commentText,id);
-       console.log(data)
-       return data
+        let { data } = await api.commentPost(commentText, id);
+        return data
     } catch (error) {
         console.log(error)
     }
 }
+//payment
+export const payment = async (rupees) => {
+    
+    console.log("payment")
+    try {
+        let { data } = await api.payment(rupees);
+        console.log(data)
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
+export const verifyPayment = async (response)=>{
+    console.log(response)
+    try {
+        let { data } = await api.verifyPayment(response);
+        console.log(data)
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}

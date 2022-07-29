@@ -23,3 +23,7 @@ export const getFavPosts = ()=> API.get('/posts/favorite')
 export const favPost = (id)=> API.get(`/posts/${id}/fav`)
 export const deleteFavPost=(id)=> API.get(`/posts/${id}/deletefav`)
 
+//payment
+export const payment = (rupees)=> API.post(`/posts/payment`,{amount:rupees})
+export const verifyPayment = (response)=> API.post(`/posts/verify`,response)
+

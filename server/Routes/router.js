@@ -1,5 +1,5 @@
 import express from 'express';
-import {createPost, deletePost, getPosts,favPost, getFavPosts,deleteFavPost,comment} from '../controllers/posts.js';
+import {createPost, deletePost, getPosts,favPost, getFavPosts,deleteFavPost,comment,verify,payment} from '../controllers/posts.js';
 import auth from '../middleware/auth.js'
 const router = express.Router();
 
@@ -13,5 +13,9 @@ router.get('/:id/fav',auth,favPost)
 router.get('/:id/deletefav',auth,deleteFavPost)
 
 router.post('/:id/comment',auth,comment);
+
+router.post('/verify',auth,verify);
+router.post('/payment',auth,payment);
+
 
 export default router;

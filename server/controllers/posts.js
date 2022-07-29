@@ -1,7 +1,9 @@
 import Products from "../models/products.js";
 import mongoose from "mongoose";
 import Users from "../models/user.js";
-
+import Razorpay from 'razorpay';
+import crypto from 'crypto';
+import dotenv from 'dotenv'
 //fetch all posts
 export const getPosts = async (req, res) => {
     try {
@@ -80,14 +82,59 @@ export const deleteFavPost = async (req, res) => {
 // add comments on post
 export const comment = async (req, res) => {
     const { id } = req.params;
-    const  {commentText}  = req.body;
-    console.log(id,commentText)
+    const { commentText } = req.body;
+    console.log(id, commentText)
     try {
         const post = await Products.findById(id);
         post.comments.push(commentText);
         const updatedPost = await Products.findByIdAndUpdate(id, post, { new: true });
-        res.json(updatedPost);      
+        res.json(updatedPost);
     } catch (error) {
         console.log(error);
+    }
+}
+dotenv.config();
+export const payment = async (req, res) => {
+    console.log("payment called",req.body.amount)
+    try {
+        var instence = new Razorpay({
+            key_id: process.env.KEY_ID,
+            key_secret:  process.env.KEY_SECRET,
+        })
+        const options = {
+            amount: req.body.amount * 100,
+            currency: "INR",
+            receipt:"order_IluGWxBm9U8zJ8"
+        }
+
+        instence.orders.create(options, (error, order) => {
+            if (error) {
+                console.log(error)
+                return res.json({ message: "something went wrong" })
+            }
+            res.json({ data: order })
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const verify = (req, res) => {
+    try {
+        const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body
+        const sign = razorpay_order_id + "|" + razorpay_payment_id;
+        const expectedSign = crypto
+            .createHmac("sha256",process.env.KEY_SECRET)
+            .update(sign.toString())
+            .digest("hex");
+        if (razorpay_signature === expectedSign) {
+            return res.json({message:"Payment verified successfully"});
+        }else{
+            return res.json({message:"invalid signature"});
+        }
+    } catch (error) {
+        console.log(error)
+        return res.json({message:"Internl server Error"});
+
     }
 }

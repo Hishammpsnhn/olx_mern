@@ -7,11 +7,11 @@ import './Post.css';
 function FavPost({ favProducts,setFavProducts, favproductId, setFavProductId }) {
     //const [favProduct, setFavProduct] = useState(favProducts)
     // const { product, setProduct } = useContext(ProductContext)
-    console.log("favproduct", favProducts)
+    
     const { user } = useContext(AuthContext)
     useEffect(() => {
         if (favproductId) {
-            console.log(favproductId)
+    
                 setFavProducts(favProducts.filter((item) => item._id !== favproductId))
                 setFavProductId(null)
                 }
