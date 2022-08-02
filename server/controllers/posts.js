@@ -95,7 +95,6 @@ export const comment = async (req, res) => {
 }
 dotenv.config();
 export const payment = async (req, res) => {
-    console.log("payment called",req.body.amount)
     try {
         var instence = new Razorpay({
             key_id: process.env.KEY_ID,

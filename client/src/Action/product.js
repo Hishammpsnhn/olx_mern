@@ -58,8 +58,6 @@ export const commentPost = async (commentText, id) => {
 }
 //payment
 export const payment = async (rupees) => {
-    
-    console.log("payment")
     try {
         let { data } = await api.payment(rupees);
         console.log(data)

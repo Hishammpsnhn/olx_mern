@@ -43,9 +43,7 @@ function Post({ setFavProductId, favProducts, setFavProducts }) {
             {
                 product.map(product => {
                     return (
-                        <div className="card"
-                         onClick={()=>{handleDetail(product)}}
-                        >
+                        <div className="card">
                             <div className="favorite" onClick={() => handlefav(product._id)} >
                                 {
                                     favProducts.find((items) => items._id === product._id) ?
@@ -53,9 +51,9 @@ function Post({ setFavProductId, favProducts, setFavProducts }) {
                                 }
 
                             </div>
-                            <div className="image">
+                            <button onClick={()=>{handleDetail(product)}} className="image">
                                 <img src={product.image} alt="unavailable" />
-                            </div>
+                            </button>
                             <div className="content">
                                 <div>
                                     <p className="rate">&#x20B9; {product.price}</p>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { singup } from '../../Action/User';
 import Logo from '../../olx-logo.png';
 import './Signup.css';
+import { AuthContext } from '../../store/Context';
 
 
 
@@ -12,13 +13,14 @@ export default function Signup() {
 
 
   const navigate = useNavigate()
-
+   const { user, setUser } = useContext(AuthContext)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     singup(userData, (res) => {
       console.log(res)
-      localStorage.setItem('profile', JSON.stringify( res ))
+      localStorage.setItem('profile', JSON.stringify(res))
+      setUser(JSON.parse(localStorage.getItem('profile')))
       navigate('/')
     })
 }

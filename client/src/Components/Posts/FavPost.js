@@ -11,7 +11,6 @@ function FavPost({ favProducts,setFavProducts, favproductId, setFavProductId }) 
     const { user } = useContext(AuthContext)
     useEffect(() => {
         if (favproductId) {
-    
                 setFavProducts(favProducts.filter((item) => item._id !== favproductId))
                 setFavProductId(null)
                 }
