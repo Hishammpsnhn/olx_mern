@@ -10,27 +10,38 @@ import { useNavigate, Link } from 'react-router-dom';
 import { SearchContext } from '../../store/SearchContext';
 import { ProductContext } from '../../store/FpostContext';
 import { useGlobalContext } from '../../store/PlaceContext'
-import { payment, verifyPayment } from '../../Action/product';
+import { payment, verifyPayment, search } from '../../Action/product';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import Place from './Place';
-import Razorpay from 'razorpay';
-function Header() {
-  const { user, setUser } = useContext(AuthContext)
-  const searchSubmit = () => {
-  }
-  
-  const { searching, setSearching } = useContext(SearchContext)
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
+function Header() {
+  const navigate = useNavigate()
+  const { user, setUser } = useContext(AuthContext)
+  const { searching, setSearching } = useContext(SearchContext)
+  const { product, setProduct } = useContext(ProductContext)
+  const [quary, setQuary] = useState("")
+
+  // search handleSubmit
+  const searchSubmit = async () => {
+    const searchPosts = await search(quary)
+
+    setProduct(searchPosts);
+  }
+
+  //Logout User
   const handleLogout = () => {
     localStorage.clear()
     setUser(null)
   }
-  const handlechange = (e) => {
 
+  // Donatation payment handleSubmit
+  const handleDonate = async () => {
+    const data = await payment(50)
+    initPayment(data.data)
   }
   const initPayment = async (data) => {
-
     const options = {
       key: "rzp_test_HhSsjYjQIiCWod", // Enter the Key ID generated from the Dashboard
       amount: data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -52,11 +63,7 @@ function Header() {
     const rzpl = new window.Razorpay(options);
     rzpl.open();
   }
-  const handleDonate = async () => {
-    const data = await payment(50)
-    initPayment(data.data)
-  }
-  const navigate = useNavigate()
+
   return (
     <>
       <div className="headerParentDiv">
@@ -65,20 +72,16 @@ function Header() {
             <OlxLogo />
           </div>
           <div className="placeSearch">
-            <Search></Search>
             <input type="text" defaultValue="India" />
-            <div>
-              <Arrow></Arrow>
-            </div>
-
+            <KeyboardArrowDownIcon />
           </div>
           <div className="productSearch">
             <div className="input">
               <input
                 type="text"
                 placeholder="Find car,mobile phone and more..."
-              // value={searching}
-              // onChange={handlechange}
+                value={quary}
+                onChange={(e) => setQuary(e.target.value)}
               />
             </div>
             <div className="searchAction" onClick={searchSubmit}>
@@ -89,8 +92,8 @@ function Header() {
             <span> ENGLISH </span>
             <Arrow></Arrow>
           </div>
-            {user?.result && <button className="donateButton" onClick={handleDonate} ><VolunteerActivismIcon/> 
-            <CurrencyRupeeIcon style={{width: '15px', height: '15px'}} />50</button>}
+          {user?.result && <button className="donateButton" onClick={handleDonate} ><VolunteerActivismIcon />
+            <CurrencyRupeeIcon style={{ width: '15px', height: '15px' }} />50</button>}
           <div className="loginPage">
             <span>{user ? `${user?.result?.username} ` : <button className="donateButton" onClick={() => navigate('/login')}>Login</button>}</span>
             <hr />

@@ -1,9 +1,12 @@
 import * as api from "../Api";
 
 //All posts
+let posts = [];
 export const getPosts = async (callback) => {
     const { data } = await api.getPosts()
     callback(data)
+    posts = data;
+    console.log(data);
 }
 export const createPost = async (product) => {
     try {
@@ -67,13 +70,20 @@ export const payment = async (rupees) => {
     }
 }
 
-export const verifyPayment = async (response)=>{
-    console.log(response)
+export const verifyPayment = async (response) => {
     try {
         let { data } = await api.verifyPayment(response);
         console.log(data)
-        return data;
     } catch (error) {
-        console.log(error);
+        console.log(error)
+    }
+}
+export const search = async (quary) => {
+    const searchPosts = posts.filter(e => e.name.toLowerCase().includes(quary));
+    console.log(searchPosts.length)
+    if(searchPosts.length === 0){
+        return null;
+    }else{
+    return searchPosts;
     }
 }

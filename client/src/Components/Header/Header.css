@@ -25,7 +25,8 @@
 }
 
 .placeSearch {
-  width: 16em;
+  width: 25vw;
+  justify-content: space-between;
   display: flex;
   height: 48px;
   align-items: center;
@@ -41,12 +42,13 @@
 }
 
 .placeSearch input {
+  width: 150px;
   border-color: transparent;
   outline-color: transparent;
 }
 
 .productSearch {
-  width: 35em;
+  width: 32vw;
   height: 48px;
   border: 2px solid #002f34;
   border-radius: 4px;

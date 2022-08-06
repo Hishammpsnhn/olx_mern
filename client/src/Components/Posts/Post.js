@@ -7,12 +7,16 @@ import { AuthContext } from '../../store/Context';
 import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import { PostContext } from '../../store/PostContext';
+import { SearchContext } from '../../store/SearchContext';
+import SearchOffIcon from '@mui/icons-material/SearchOff';
 
 function Post({ setFavProductId, favProducts, setFavProducts }) {
 
     const { postDetails, setPostDetails } = useContext(PostContext)
     const { product, setProduct } = useContext(ProductContext)
     const { user } = useContext(AuthContext)
+    const { searching, setSearching } = useContext(SearchContext)
+
     const navigate = useNavigate();
     const handleDelete = (id) => {
         deletePost(id)
@@ -32,14 +36,20 @@ function Post({ setFavProductId, favProducts, setFavProducts }) {
             })
         }
     }
-    const handleDetail=(product)=>{
+    const handleDetail = (product) => {
         navigate("/view")
         setPostDetails(product)
     }
-
+    if (product === null) return (
+        <div className="emptysearch">
+            <p>couldn't find any thing</p>
+            <SearchOffIcon style={{ width: '50px', height: '50px' }}/>
+        </div>
+    )
 
     return (
         <div className="cards">
+
             {
                 product.map(product => {
                     return (
@@ -51,7 +61,7 @@ function Post({ setFavProductId, favProducts, setFavProducts }) {
                                 }
 
                             </div>
-                            <button onClick={()=>{handleDetail(product)}} className="image">
+                            <button onClick={() => { handleDetail(product) }} className="image">
                                 <img src={product.image} alt="unavailable" />
                             </button>
                             <div className="content">

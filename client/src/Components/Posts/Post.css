@@ -96,3 +96,11 @@
   color: white;
   border-radius: 5px;
 }
+.emptysearch{
+  padding: 20px;
+  text-align: center;
+  color: red;
+  font-size: large;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
