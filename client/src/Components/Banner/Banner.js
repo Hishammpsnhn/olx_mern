@@ -1,5 +1,5 @@
 import React from 'react';
-
+import banner from '../../assets/banner copy.png'
 import './Banner.css';
 import Arrow from '../../assets/Arrow'
 function Banner() {
@@ -24,8 +24,8 @@ function Banner() {
         </div>
         <div className="banner">
           <img
-            src="../../../Images/banner copy.png"
-            alt=""
+          src={banner} 
+            alt="banner not available"
           />
         </div>
       </div>

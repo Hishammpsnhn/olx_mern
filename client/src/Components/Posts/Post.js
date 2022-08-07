@@ -53,7 +53,7 @@ function Post({ setFavProductId, favProducts, setFavProducts }) {
             {
                 product.map(product => {
                     return (
-                        <div className="card">
+                        <div key={product._id} className="card">
                             <div className="favorite" onClick={() => handlefav(product._id)} >
                                 {
                                     favProducts.find((items) => items._id === product._id) ?

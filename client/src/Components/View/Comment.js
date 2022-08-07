@@ -21,9 +21,9 @@ function Comment() {
     return (
         <>
             <div className='comment-container'>
-                <h5>Comments</h5>
+                {/* <h5>Comments</h5> */}
                 <div className="inputButton">
-                    <input className='comment-textarea' name='comment' type="text" placeholder='add comment...' onChange={(e) => setComment(e.target.value)} value={comment} />
+                    <input className='comment-textarea' name='comment' type="text" placeholder='Add Comment...' onChange={(e) => setComment(e.target.value)} value={comment} />
                     <button onClick={handlesubmit} ><SendIcon /></button>
                 </div>
 
