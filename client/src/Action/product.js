@@ -87,3 +87,13 @@ export const search = async (quary) => {
     return searchPosts;
     }
 }
+
+export const getSellerdetails = async (id)=>{
+    try {
+        const {data} = await api.getSellerdetails(id);
+        console.log(data)
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}

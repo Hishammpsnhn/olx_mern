@@ -24,22 +24,24 @@ function Comment() {
                 <h5>Comments</h5>
                 <div className="inputButton">
                     <input className='comment-textarea' name='comment' type="text" placeholder='add comment...' onChange={(e) => setComment(e.target.value)} value={comment} />
-                    <button onClick={handlesubmit} ><SendIcon/></button>
+                    <button onClick={handlesubmit} ><SendIcon /></button>
                 </div>
 
             </div>
-            {
-                postDetails.comments.slice(0).reverse().map((item, index) => {
-                    return (
-                        <div key={index}>
-                            <p>
-                                <strong>{item.split(":")[0]}</strong>
-                                {item.split(":")[1]}
-                            </p>
-                        </div>
-                    )
-                })
-            }
+            <div className='comments'>
+                {
+                    postDetails.comments.slice(0).reverse().map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <p>
+                                    <strong>{item.split(":")[0]}</strong>
+                                    {item.split(":")[1]}
+                                </p>
+                            </div>
+                        )
+                    })
+                }
+            </div>
             <div>
 
             </div>

@@ -27,3 +27,4 @@ export const deleteFavPost=(id)=> API.get(`/posts/${id}/deletefav`)
 export const payment = (rupees)=> API.post(`/posts/payment`,{amount:rupees})
 export const verifyPayment = (response)=> API.post(`/posts/verify`,response)
 
+export const getSellerdetails = (id)=> API.get(`/posts/${id}/view`)

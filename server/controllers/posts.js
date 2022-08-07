@@ -137,3 +137,18 @@ export const verify = (req, res) => {
 
     }
 }
+
+
+export const sellerDetails =async (req,res)=>{
+    console.log(req.params)
+    const { id } = req.params;
+    if (!req.userId) return res.json({ message: 'unauthenticated' })
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id')
+    try {
+        const user = await Users.findById(id)
+        console.log(user)
+        res.status(201).json({username:user.username,phone:user.phone})
+    } catch (error) {
+        console.log(error)
+    }   
+}
