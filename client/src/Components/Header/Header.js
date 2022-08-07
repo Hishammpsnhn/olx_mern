@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './Header.css';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 import OlxLogo from '../../assets/OlxLogo';
 import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
@@ -14,7 +16,7 @@ import { payment, verifyPayment, search } from '../../Action/product';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import Place from './Place';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
 
 function Header() {
   const navigate = useNavigate()
@@ -22,14 +24,18 @@ function Header() {
   const { searching, setSearching } = useContext(SearchContext)
   const { product, setProduct } = useContext(ProductContext)
   const [quary, setQuary] = useState("")
-
+ 
   // search handleSubmit
   const searchSubmit = async () => {
     const searchPosts = await search(quary)
-
+    
     setProduct(searchPosts);
-  }
-
+  } 
+  const options = [
+    'India', 'Japan', 'China'
+  ];
+  const defaultOption = options[0];
+  
   //Logout User
   const handleLogout = () => {
     localStorage.clear()
@@ -72,8 +78,8 @@ function Header() {
             <OlxLogo />
           </div>
           <div className="placeSearch">
-            <input type="text" defaultValue="India" />
-            <KeyboardArrowDownIcon />
+          <Dropdown options={options}  value={defaultOption} placeholder="Select an option" />
+      
           </div>
           <div className="productSearch">
             <div className="input">
