@@ -13,9 +13,7 @@ import Create from './Pages/Create'
 import View from './Pages/ViewPost'
 import ViewPost from './Pages/ViewPost';
 import Post from './store/PostContext';
-import Search from './store/SearchContext'
 import Button from './store/FpostContext'
-import { Place } from './store/PlaceContext';
 import { getPosts } from './Action/product';
 function App() {
 
@@ -24,9 +22,7 @@ function App() {
 
   return (
     <div>
-      <Place>
         <Button>
-          <Search>
             <Post>
               <BrowserRouter>
                 <Routes>
@@ -39,9 +35,7 @@ function App() {
                 </Routes>
               </BrowserRouter>
             </Post>
-          </Search>
         </Button>
-      </Place>
     </div>
   );
 }

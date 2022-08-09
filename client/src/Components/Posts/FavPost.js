@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext} from 'react'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../store/Context';
-import { ProductContext } from '../../store/FpostContext';
 import { PostContext } from '../../store/PostContext';
 import './Post.css';
 

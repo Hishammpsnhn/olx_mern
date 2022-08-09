@@ -7,23 +7,20 @@ import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
-import { AuthContext } from '../../store/Context';
 import { useNavigate, Link } from 'react-router-dom';
-import { SearchContext } from '../../store/SearchContext';
-import { ProductContext } from '../../store/FpostContext';
-import { useGlobalContext } from '../../store/PlaceContext'
 import { payment, verifyPayment, search } from '../../Action/product';
+import { Backdrop, CircularProgress } from '@mui/material';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import Place from './Place';
 import { Button } from 'react-scroll';
-import { Backdrop, CircularProgress } from '@mui/material';
+import { AuthContext } from '../../store/Context';
+import { ProductContext } from '../../store/FpostContext';
 
 
 function Header() {
   const navigate = useNavigate()
   const { user, setUser } = useContext(AuthContext)
-  const { searching, setSearching } = useContext(SearchContext)
   const { product, setProduct } = useContext(ProductContext)
   const [quary, setQuary] = useState("")
 

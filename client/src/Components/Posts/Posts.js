@@ -2,8 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getFavPosts, getPosts } from '../../Action/product';
 import { ProductContext } from '../../store/FpostContext';
-import { PostContext } from '../../store/PostContext';
-import { SearchContext } from '../../store/SearchContext';
 import Post from './Post';
 import './Post.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";

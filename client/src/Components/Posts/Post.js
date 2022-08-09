@@ -1,21 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import './Post.css';
-import Heart from '../../assets/Heart';
-import { ProductContext } from '../../store/FpostContext';
 import { deletePost, favPost, deleteFavPost } from '../../Action/product';
-import { AuthContext } from '../../store/Context';
-import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
-import { PostContext } from '../../store/PostContext';
-import { SearchContext } from '../../store/SearchContext';
+import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material'
 import SearchOffIcon from '@mui/icons-material/SearchOff';
+import { AuthContext } from '../../store/Context';
+import { ProductContext } from '../../store/FpostContext';
+import { PostContext } from '../../store/PostContext';
 
 function Post({ setFavProductId, favProducts, setFavProducts }) {
 
     const { postDetails, setPostDetails } = useContext(PostContext)
     const { product, setProduct } = useContext(ProductContext)
     const { user } = useContext(AuthContext)
-    const { searching, setSearching } = useContext(SearchContext)
 
     const navigate = useNavigate();
     const handleDelete = (id) => {
